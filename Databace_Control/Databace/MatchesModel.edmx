@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MatchesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Matches.dbo.GemaPlayers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="GemaPlayers">
+          <Key>
+            <PropertyRef Name="PlayerId" />
+            <PropertyRef Name="MatchId" />
+          </Key>
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="MatchId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Stadium" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TeamA" Type="int" Nullable="false" />
+          <Property Name="TeamB" Type="int" Nullable="false" />
+          <Property Name="TeamAScore" Type="int" Nullable="false" />
+          <Property Name="TeamBScore" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__GemaPlaye__Match__2D27B809">
+          <End Role="Matches" Type="Self.Matches" Multiplicity="1" />
+          <End Role="GemaPlayers" Type="Self.GemaPlayers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matches">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GemaPlayers">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GemaPlaye__Playe__2E1BDC42">
+          <End Role="Players" Type="Self.Players" Multiplicity="1" />
+          <End Role="GemaPlayers" Type="Self.GemaPlayers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GemaPlayers">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matches__TeamA__29572725">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="TeamA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matches__TeamB__2A4B4B5E">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="TeamB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Players__TeamId__25869641">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Players" Type="Self.Players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Players">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MatchesModelStoreContainer">
+          <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Players" EntityType="Self.Players" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GemaPlayers" EntityType="Self.GemaPlayers" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [GemaPlayers].[PlayerId] AS [PlayerId], 
+    [GemaPlayers].[MatchId] AS [MatchId]
+    FROM [dbo].[GemaPlayers] AS [GemaPlayers]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__GemaPlaye__Match__2D27B809" Association="Self.FK__GemaPlaye__Match__2D27B809">
+            <End Role="Matches" EntitySet="Matches" />
+            <End Role="GemaPlayers" EntitySet="GemaPlayers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GemaPlaye__Playe__2E1BDC42" Association="Self.FK__GemaPlaye__Playe__2E1BDC42">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="GemaPlayers" EntitySet="GemaPlayers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matches__TeamA__29572725" Association="Self.FK__Matches__TeamA__29572725">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matches__TeamB__2A4B4B5E" Association="Self.FK__Matches__TeamB__2A4B4B5E">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Players__TeamId__25869641" Association="Self.FK__Players__TeamId__25869641">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MatchesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Matches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Stadium" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TeamA" Type="Int32" Nullable="false" />
+          <Property Name="TeamB" Type="Int32" Nullable="false" />
+          <Property Name="TeamAScore" Type="Int32" Nullable="false" />
+          <Property Name="TeamBScore" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Teams" Relationship="Self.FK__Matches__TeamA__29572725" FromRole="Matches" ToRole="Teams" />
+          <NavigationProperty Name="Teams1" Relationship="Self.FK__Matches__TeamB__2A4B4B5E" FromRole="Matches" ToRole="Teams" />
+          <NavigationProperty Name="Players" Relationship="Self.GemaPlayers" FromRole="Matches" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Teams" Relationship="Self.FK__Players__TeamId__25869641" FromRole="Players" ToRole="Teams" />
+          <NavigationProperty Name="Matches" Relationship="Self.GemaPlayers" FromRole="Players" ToRole="Matches" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Matches" Relationship="Self.FK__Matches__TeamA__29572725" FromRole="Teams" ToRole="Matches" />
+          <NavigationProperty Name="Matches1" Relationship="Self.FK__Matches__TeamB__2A4B4B5E" FromRole="Teams" ToRole="Matches" />
+          <NavigationProperty Name="Players" Relationship="Self.FK__Players__TeamId__25869641" FromRole="Teams" ToRole="Players" />
+        </EntityType>
+        <Association Name="FK__Matches__TeamA__29572725">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="TeamA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matches__TeamB__2A4B4B5E">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="TeamB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Players__TeamId__25869641">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Players" Type="Self.Players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Players">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GemaPlayers">
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <End Role="Players" Type="Self.Players" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MatchesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Matches" EntityType="Self.Matches" />
+          <EntitySet Name="Players" EntityType="Self.Players" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" />
+          <AssociationSet Name="FK__Matches__TeamA__29572725" Association="Self.FK__Matches__TeamA__29572725">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matches__TeamB__2A4B4B5E" Association="Self.FK__Matches__TeamB__2A4B4B5E">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Players__TeamId__25869641" Association="Self.FK__Players__TeamId__25869641">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="GemaPlayers" Association="Self.GemaPlayers">
+            <End Role="Matches" EntitySet="Matches" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MatchesModelStoreContainer" CdmEntityContainer="MatchesEntities">
+          <EntitySetMapping Name="Matches">
+            <EntityTypeMapping TypeName="MatchesModel.Matches">
+              <MappingFragment StoreEntitySet="Matches">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Stadium" ColumnName="Stadium" />
+                <ScalarProperty Name="TeamA" ColumnName="TeamA" />
+                <ScalarProperty Name="TeamB" ColumnName="TeamB" />
+                <ScalarProperty Name="TeamAScore" ColumnName="TeamAScore" />
+                <ScalarProperty Name="TeamBScore" ColumnName="TeamBScore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="MatchesModel.Players">
+              <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="MatchesModel.Teams">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="GemaPlayers" TypeName="MatchesModel.GemaPlayers" StoreEntitySet="GemaPlayers">
+            <EndProperty Name="Matches">
+              <ScalarProperty Name="Id" ColumnName="MatchId" />
+            </EndProperty>
+            <EndProperty Name="Players">
+              <ScalarProperty Name="Id" ColumnName="PlayerId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -10,6 +10,10 @@ namespace Databace
     {
         static void Main(string[] args)
         {
+            var match = new MatchesRepository();
+
+            match.GetInfo();
+
         }
     }
 }
