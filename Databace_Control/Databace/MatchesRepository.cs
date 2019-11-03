@@ -10,26 +10,26 @@ namespace Databace
     {
         public void GetInfo()
         {
-            using (var db = new MatchesEntities())
+            using (var dbMatch = new MatchesEntities())
             {
-                var s = db.Matches.ToList();
+                var matches = dbMatch.Matches.ToList();
 
-                foreach (var item in s)
+                foreach (var match in matches)
                 {
-                    Console.WriteLine($"{item.Teams.TeamName} - {item.Teams1.TeamName} {item.TeamAScore}:{item.TeamBScore}\n");
-                    Console.WriteLine($"{item.Teams.TeamName} players in this match:\n");
-                    foreach (var item1 in item.Teams.Players.ToList())
+                    Console.WriteLine($"{match.Teams.TeamName} - {match.Teams1.TeamName} {match.TeamAScore}:{match.TeamBScore}\n");
+                    Console.WriteLine($"\n{match.Teams.TeamName} players in this match:\n");
+                    foreach (var playerTeamA in match.Teams.Players.ToList())
                     {
-                        Console.WriteLine($"\t{item1.Id}.{item1.Name}");
+                        Console.WriteLine($"\t{playerTeamA.Id}.{playerTeamA.Name}");
                     }
 
-                    Console.WriteLine($"{item.Teams1.TeamName} players in this match:\n");
-                    foreach (var item2 in item.Teams1.Players.ToList())
+                    Console.WriteLine($"\n{match.Teams1.TeamName} players in this match:\n");
+                    foreach (var playerTeamB in match.Teams1.Players.ToList())
                     {
-                        Console.WriteLine($"\t{item2.Id}.{item2.Name}");
+                        Console.WriteLine($"\t{playerTeamB.Id}.{playerTeamB.Name}");
                     }
 
-                    Console.WriteLine("For show next match press any key....");
+                    Console.WriteLine("\nFor show next match press any key....");
                     Console.ReadKey();
                     Console.Clear();
                 }
